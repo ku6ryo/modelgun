@@ -1,0 +1,4 @@
+[fields.first]
+type = "string"
+[fields.last]
+type = "string"

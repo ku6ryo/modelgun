@@ -1,0 +1,9 @@
+
+[fields.id]
+type = "uuid"
+
+[fields.type]
+type = "number"
+
+[fields.name]
+type = "ref:./Name"

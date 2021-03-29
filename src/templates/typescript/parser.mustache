@@ -1,0 +1,39 @@
+import {{class}} from "./{{class}}"
+{{#fields}}
+{{#importFilePath}}
+import {{type}} from "{{{importFilePath}}}"
+import parse{{type}} from "{{{importFilePath}}}.parser"
+{{/importFilePath}}
+{{/fields}}
+
+export default function parse{{class}} (data: any) {
+  if (typeof data !== "object") {
+    throw new ParseError()
+  }
+  {{#fields}}
+  {{#importFilePath}}
+  const {{name}}: {{type}} = parse{{type}}(data["{{name}}"])
+  {{/importFilePath}}
+  {{^importFilePath}}
+  const {{name}}: {{type}} = data["{{name}}"]
+  if (typeof {{name}} !== "{{type}}") {
+    throw new ParseError()
+  }
+  {{/importFilePath}}
+  {{#isUuid}}
+  if (!isUuid({{name}})) {
+    throw new ParseError()
+  }
+  {{/isUuid}}
+  {{#isEmail}}
+  if (!isEmail({{name}})) {
+    throw new ParseError()
+  }
+  {{/isEmail}}
+  {{/fields}}
+  return new {{class}}(
+  {{#fields}}
+    {{name}},
+  {{/fields}}
+  )
+}
