@@ -1,0 +1,6 @@
+[fields.str]
+type = "string"
+[fields.num]
+type = "number"
+[fields.child]
+type = "ref:./Grandchild"

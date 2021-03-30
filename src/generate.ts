@@ -4,11 +4,10 @@ import toml from "toml"
 import mustache from "mustache"
 import camelCase from "camelcase"
 
-
-
 enum PrimitiveType {
   STRING = "string",
   NUMBER = "number",
+  BOOLEAN = "boolean",
 }
 
 enum StringType {
@@ -46,8 +45,11 @@ function generateBaseData (className: string, fields: any) {
     let importFilePath = null
     let isUuid = false
     let isEmail = false
+    let regex = null
     let maxLength = null
     let minLength = null
+    let max = null
+    let min = null
     if (STRING_TYPES.includes(def.type)) {
       type = PrimitiveType.STRING
       if (typeof def.maxLength === "number"
@@ -60,12 +62,21 @@ function generateBaseData (className: string, fields: any) {
       ) {
         minLength = def.minLength
       }
+      if (typeof def.regex === "string") {
+        regex = def.regex
+      }
       isUuid = def.type === StringType.UUID
       isEmail = def.type === StringType.EMAIL
       hasUuid = hasUuid || isUuid
       hasEmail = hasEmail || isEmail
     } else if (NUMBER_TYPES.includes(def.type)) {
       type = PrimitiveType.NUMBER
+      if (typeof def.min === "number") {
+        min = def.min
+      }
+      if (typeof def.max === "number") {
+        max = def.max
+      }
     } else if (def.type === BooleanType.BOOLEAN) {
       type = BooleanType.BOOLEAN
     } else if (def.type.startsWith("ref:")) {
@@ -82,6 +93,9 @@ function generateBaseData (className: string, fields: any) {
       isEmail: def.type === StringType.EMAIL,
       maxLength,
       minLength,
+      regex,
+      min,
+      max,
       importFilePath,
       type,
     })
@@ -110,6 +124,11 @@ function generateParser (className: string, fields: any) {
   return mustache.render(templateData, baseData)
 }
 
+function isModelDefFile(filePath: string) {
+  const parts = path.basename(filePath).split(".")
+  return parts.length === 3 && parts[1] === "model" && parts[2] === "toml"
+}
+
 type GenerateOption = {
   targetDir: string,
 }
@@ -118,8 +137,7 @@ export default function generate(options: GenerateOption) {
   const targetDir = options.targetDir
   const candidateFiles = fs.readdirSync(targetDir)
   const targetFiles = candidateFiles.filter(filePath => {
-    const parts = path.basename(filePath).split(".")
-    return parts.length === 3 && parts[1] === "mdef" && parts[2] === "toml"
+    return isModelDefFile(filePath)
   })
   targetFiles.forEach(targetFile => {
     const targetFilePath = targetDir + "/" + targetFile

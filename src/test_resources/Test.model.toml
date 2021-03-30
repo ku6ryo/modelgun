@@ -1,0 +1,23 @@
+[fields.str]
+type = "string"
+[fields.strMinMaxLength]
+type = "string"
+minLength = 1
+maxLength = 256
+[fields.strRegex]
+type = "string"
+regex = "[a-Z]+"
+[fields.uuid]
+type = "uuid"
+[fields.email]
+type = "email"
+[fields.url]
+type = "url"
+[fields.num]
+type = "number"
+[fields.numMinMax]
+type = "number"
+min = -10
+max = 10
+[fields.child]
+type = "ref:./Child"

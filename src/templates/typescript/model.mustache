@@ -12,10 +12,21 @@ import isUuid from "validator/es/lib/isUuid"
 {{#hasEmail}}
 import isEmail from "validator/es/lib/isEmail"
 {{/hasEmail}}
-import {
-  UnexpectedNullError,
-  InvalidPropertyError,
-} from "./errors"
+{{#hasUrl}}
+import isUrl from "validator/es/lib/isUrl"
+{{/hasUrl}}
+
+export class UnexpectedNullError extends Error {
+  constructor () {
+    super("{{class}} UnexpectedNullError: If you see this, ModelGun validation may be broken.")
+  }
+}
+
+export class InvalidPropertyError extends Error {
+  constructor (message: string) {
+    super("{{class}} UnexpectedNullError: " + message)
+  }
+}
 
 export default class {{class}} {
   {{#fields}}
@@ -51,6 +62,11 @@ export default class {{class}} {
       throw new InvalidPropertyError()
     }
     {{/isEmail}}
+    {{#isUrl}}
+    if (!isUrl(value)) {
+      throw new InvalidPropertyError()
+    }
+    {{/isUrl}}
     {{#minLength}}
     if (value.length < {{minLength}}) {
       throw new InvalidPropertyError()
@@ -61,6 +77,21 @@ export default class {{class}} {
       throw new InvalidPropertyError()
     }
     {{/maxLength}}
+    {{#regex}}
+    if (!/{{regex}}/.test(value)) {
+      throw new InvalidPropertyError()
+    }
+    {{/regex}}
+    {{#max}}
+    if (value > {{max}}) {
+      throw new InvalidPropertyError()
+    }
+    {{/max}}
+    {{#min}}
+    if (value < {{min}}) {
+      throw new InvalidPropertyError()
+    }
+    {{/min}}
     this.#{{name}} = value
   }
   {{/fields}}
