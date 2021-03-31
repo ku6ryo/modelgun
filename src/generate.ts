@@ -33,14 +33,14 @@ const STRING_TYPES = [
 ]
 const NUMBER_TYPES = [NumberType.NUMBER]
 
-function generateBaseData (className: string, fields: any) {
+function generateBaseData (className: string, props: any) {
   let hasUuid = false
   let hasEmail = false
   const cleanFields = []
-  for (let property in fields) {
+  for (let property in props) {
     const propertyCamelCase = camelCase(property)
     const propertyPascalCase = camelCase(property, { pascalCase: true })
-    const def = fields[property]
+    const def = props[property]
     let description = def.description || null
     let type = null
     let importFilePath = null
@@ -104,22 +104,22 @@ function generateBaseData (className: string, fields: any) {
   }
   return {
     class: className,
-    fields: cleanFields,
+    props: cleanFields,
     hasUuid,
     hasEmail,
   }
 }
 
-function generateClass (className: string, fields: any) {
-  const baseData = generateBaseData(className, fields)
+function generateClass (className: string, props: any) {
+  const baseData = generateBaseData(className, props)
   const templateData = fs.readFileSync(
     path.join(__dirname, "./templates/typescript/model.mustache")
   ).toString()
   return mustache.render(templateData, baseData)
 }
 
-function generateParser (className: string, fields: any) {
-  const baseData = generateBaseData(className, fields)
+function generateParser (className: string, props: any) {
+  const baseData = generateBaseData(className, props)
   const templateData = fs.readFileSync(
     path.join(__dirname, "./templates/typescript/parser.mustache")
   ).toString()
@@ -147,9 +147,9 @@ export default function generate(options: GenerateOption) {
     const text = fs.readFileSync(targetFilePath).toString()
     const def = toml.parse(text)
     const className = path.basename(targetFile).split(".")[0]
-    const classFileData = generateClass(className, def.fields)
+    const classFileData = generateClass(className, def.props)
     fs.writeFileSync(path.join(targetDir, className + ".ts"), classFileData)
-    const parserFileData = generateParser(className, def.fields)
+    const parserFileData = generateParser(className, def.props)
     fs.writeFileSync(path.join(targetDir, className + ".parser.ts"), parserFileData)
   })
 }

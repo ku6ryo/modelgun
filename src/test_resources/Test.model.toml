@@ -1,28 +1,28 @@
-[fields.str]
-description = "string value field."
+[props.str]
+description = "string value prop."
 type = "string"
-[fields.strMinMaxLength]
-description = "string value field with min / max length."
+[props.strMinMaxLength]
+description = "string value prop with min / max length."
 type = "string"
 minLength = 1
 maxLength = 256
-[fields.strRegex]
-description = "string value field with regex condition."
+[props.strRegex]
+description = "string value prop with regex condition."
 type = "string"
 regex = "[a-Z]+"
-[fields.uuid]
-description = "UUID field."
+[props.uuid]
+description = "UUID prop."
 type = "uuid"
-[fields.email]
-description = "Email field."
+[props.email]
+description = "Email prop."
 type = "email"
-[fields.url]
+[props.url]
 type = "url"
-[fields.num]
+[props.num]
 type = "number"
-[fields.numMinMax]
+[props.numMinMax]
 type = "number"
 min = -10
 max = 10
-[fields.child]
+[props.child]
 type = "ref:./Child"

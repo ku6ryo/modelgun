@@ -1,6 +1,6 @@
-[fields.str]
+[props.str]
 type = "string"
-[fields.num]
+[props.num]
 type = "number"
-[fields.child]
+[props.child]
 type = "ref:./Grandchild"

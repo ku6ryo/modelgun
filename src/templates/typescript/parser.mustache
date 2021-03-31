@@ -1,10 +1,10 @@
 import {{class}}, { UnexpectedNullError, InvalidPropertyError, } from "./{{class}}"
-{{#fields}}
+{{#props}}
 {{#importFilePath}}
 import {{type}} from "{{{importFilePath}}}"
 import parse{{type}} from "{{{importFilePath}}}.parser"
 {{/importFilePath}}
-{{/fields}}
+{{/props}}
 
 export class ParseError extends Error {
   constructor (message: string) {
@@ -16,7 +16,7 @@ export default function parse{{class}} (data: any) {
   if (typeof data !== "object") {
     throw new ParseError("Given data is not an object.")
   }
-  {{#fields}}
+  {{#props}}
   {{#importFilePath}}
   const {{name}}: {{type}} = parse{{type}}(data["{{name}}"])
   {{/importFilePath}}
@@ -26,10 +26,10 @@ export default function parse{{class}} (data: any) {
     throw new ParseError("{{name}} is not a {{type}}")
   }
   {{/importFilePath}}
-  {{/fields}}
+  {{/props}}
   return new {{class}}(
-  {{#fields}}
+  {{#props}}
     {{name}},
-  {{/fields}}
+  {{/props}}
   )
 }
