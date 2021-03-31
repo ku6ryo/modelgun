@@ -33,6 +33,11 @@ export default class {{class}} {
   #{{name}}: {{type}} | null = null
   {{/fields}}
 
+  /**
+  {{#fields}}
+   * @param {{type}} {{name}} {{#description}}{{description}}{{/description}}
+  {{/fields}}
+   */
   constructor (
   {{#fields}}
     {{name}}: {{type}},
@@ -44,6 +49,9 @@ export default class {{class}} {
   }
   {{#fields}}
 
+  /**
+   * Gets {{name}}
+   */
   {{getterName}} (): {{type}} {
     if (this.#{{name}} === null) {
       throw new UnexpectedNullError()
@@ -51,45 +59,49 @@ export default class {{class}} {
     return this.#{{name}}
   }
 
+  /**
+   * Sets {{name}}
+   * @param value
+   */
   {{setterName}} (value: {{type}}) {
     {{#isUuid}}
     if (!isUuid(value)) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is not UUID value. ({{class}}.{{setterName}})`)
     }
     {{/isUuid}}
     {{#isEmail}}
     if (!isEmail(value)) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is not Email value. ({{class}}.{{setterName}})`)
     }
     {{/isEmail}}
     {{#isUrl}}
     if (!isUrl(value)) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is not URL value. ({{class}}.{{setterName}})`)
     }
     {{/isUrl}}
     {{#minLength}}
     if (value.length < {{minLength}}) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is shorter than {{minLength}}. ({{class}}.{{setterName}})`)
     }
     {{/minLength}}
     {{#maxLength}}
     if (value.length > {{maxLength}}) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is longer than {{maxLength}}. ({{class}}.{{setterName}})`)
     }
     {{/maxLength}}
     {{#regex}}
     if (!/{{regex}}/.test(value)) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} does not match {{regex}}. ({{class}}.{{setterName}})`)
     }
     {{/regex}}
     {{#max}}
     if (value > {{max}}) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is more than {{max}}. ({{class}}.{{setterName}})`)
     }
     {{/max}}
     {{#min}}
     if (value < {{min}}) {
-      throw new InvalidPropertyError()
+      throw new InvalidPropertyError(`${value} is less than {{min}}. ({{class}}.{{setterName}})`)
     }
     {{/min}}
     this.#{{name}} = value

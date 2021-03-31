@@ -1,15 +1,20 @@
 [fields.str]
+description = "string value field."
 type = "string"
 [fields.strMinMaxLength]
+description = "string value field with min / max length."
 type = "string"
 minLength = 1
 maxLength = 256
 [fields.strRegex]
+description = "string value field with regex condition."
 type = "string"
 regex = "[a-Z]+"
 [fields.uuid]
+description = "UUID field."
 type = "uuid"
 [fields.email]
+description = "Email field."
 type = "email"
 [fields.url]
 type = "url"

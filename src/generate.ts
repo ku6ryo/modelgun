@@ -40,8 +40,9 @@ function generateBaseData (className: string, fields: any) {
   for (let property in fields) {
     const propertyCamelCase = camelCase(property)
     const propertyPascalCase = camelCase(property, { pascalCase: true })
-    let type = null
     const def = fields[property]
+    let description = def.description || null
+    let type = null
     let importFilePath = null
     let isUuid = false
     let isEmail = false
@@ -85,6 +86,7 @@ function generateBaseData (className: string, fields: any) {
     }
     cleanFields.push({
       name: property,
+      description,
       nameCamelCase: propertyCamelCase,
       namePascalCase: propertyPascalCase,
       setterName: `set${propertyPascalCase}`,
