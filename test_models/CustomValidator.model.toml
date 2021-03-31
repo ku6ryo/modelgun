@@ -1,0 +1,14 @@
+description = "This is the base model to test settings"
+header = "
+import isOne from \"../test_validators/isOne\"
+import isA from \"../test_validators/isA\"
+"
+
+[props.a]
+type = "string"
+description = "Must be a capical A."
+customValidator = "isA"
+[props.one]
+type = "int"
+description = "Must be 1."
+customValidator = "isOne"

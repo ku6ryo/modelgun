@@ -21,6 +21,7 @@ function parseProps (props: any[]) {
     let isModel = false
     let importFilePath = null
     let isArray = def.array === true
+    let customValidator = def.customValidator || null
     let parsed: StringPropDef | NumberPropDef | null = null
     if (STRING_TYPES.includes(def.type)) {
       isString = true
@@ -54,6 +55,7 @@ function parseProps (props: any[]) {
         isModel,
         isArray,
         importFilePath,
+        customValidator,
         ...parsed
       })
     }
@@ -62,7 +64,6 @@ function parseProps (props: any[]) {
 }
 
 function parseModelDef (fileName: string, def: any) {
-  console.log(def)
   const { header, description, props, } = def
   if (header !== undefined && typeof header !== "string") {
     throw new Error("Header must be a string.")

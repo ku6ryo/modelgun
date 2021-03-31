@@ -124,6 +124,11 @@ export default class {{class}} {
       throw new InvalidPropertyError(`${value} is not an integer. ({{class}}.{{setterName}})`)
     }
     {{/isInt}}
+    {{#customValidator}}
+    if (!{{customValidator}}(value)) {
+      throw new InvalidPropertyError(`${value} does not match the custom validator {{customValidator}}. ({{class}}.{{setterName}})`)
+    }
+    {{/customValidator}}
   }
 
 

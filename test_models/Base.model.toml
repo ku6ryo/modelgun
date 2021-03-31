@@ -10,6 +10,6 @@ header = "
 type = "string"
 description = "str prop"
 [props.prop2]
-type = "number"
+type = "int"
 [props.prop3]
 type = "boolean"
