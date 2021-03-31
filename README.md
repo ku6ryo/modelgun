@@ -17,10 +17,10 @@ type = uuid
 type = int32
 ```
 # type
-```
 - string
 - number
 - boolean
 - uuid
 - email
-```
+- float
+- int

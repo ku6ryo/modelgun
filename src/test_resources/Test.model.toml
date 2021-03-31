@@ -10,6 +10,10 @@ maxLength = 256
 description = "string value prop with regex condition."
 type = "string"
 regex = "[a-Z]+"
+[props.strArray]
+description = "string array prop"
+type = "string"
+array = true
 [props.uuid]
 description = "UUID prop."
 type = "uuid"
@@ -20,9 +24,17 @@ type = "email"
 type = "url"
 [props.num]
 type = "number"
+[props.numArray]
+type = "number"
+array = true
+[props.int]
+type = "int"
 [props.numMinMax]
 type = "number"
 min = -10
 max = 10
 [props.child]
 type = "ref:./Child"
+[props.children]
+type = "ref:./Child"
+array = true
