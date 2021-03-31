@@ -2,11 +2,11 @@
 // https://github.com/ku6ryo/ModelGun
 // PLEASE DO NOT EDIT. If you want to extend the functionality, please import
 // the export members and use as a part or inherit class.
-
+{{{header}}}
 {{#props}}
-{{#importFilePath}}
+{{#isModel}}
 import {{type}} from "{{{importFilePath}}}.model"
-{{/importFilePath}}
+{{/isModel}}
 {{/props}}
 {{#hasUuid}}
 import isUuid from "validator/lib/isUuid"
@@ -30,6 +30,10 @@ export class InvalidPropertyError extends Error {
   }
 }
 
+/**
+ * {{class}} model.
+ * {{#description}}{{description}}{{/description}}
+ */
 export default class {{class}} {
   {{#props}}
   #{{name}}: {{type}}{{#isArray}}[]{{/isArray}} | null = null

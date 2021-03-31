@@ -1,0 +1,15 @@
+description = "This is the base model to test settings"
+header = "
+// This is header
+// Multiple line.
+// You can specify anythin like imports from non-supported validators.
+// import isFoo from \"bar/isFoo\"
+"
+
+[props.prop1]
+type = "string"
+description = "str prop"
+[props.prop2]
+type = "number"
+[props.prop3]
+type = "boolean"

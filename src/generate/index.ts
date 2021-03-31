@@ -61,7 +61,15 @@ function parseProps (props: any[]) {
   return parsedProps
 }
 
-function parseModelDef (fileName: string, props: any) {
+function parseModelDef (fileName: string, def: any) {
+  console.log(def)
+  const { header, description, props, } = def
+  if (header !== undefined && typeof header !== "string") {
+    throw new Error("Header must be a string.")
+  }
+  if (description !== undefined && typeof description !== "string") {
+    throw new Error("Header must be a string.")
+  }
   const parsedProps = parseProps(props)
   // Checks validations requires libraries.
   const hasUuid = parsedProps.some(p => {
@@ -78,6 +86,8 @@ function parseModelDef (fileName: string, props: any) {
   })
   return {
     class: fileName,
+    header: header || null,
+    description: description || null,
     props: parsedProps,
     hasUuid,
     hasEmail,
@@ -111,8 +121,8 @@ function removeDuplicatedImports(code: string) {
   return lines.filter((_, i) => !duplicatedLineNumbers.includes(i)).join("\n")
 }
 
-function generateModel (fileName: string, props: any): string {
-  const modelData = parseModelDef(fileName, props)
+function generateModel (fileName: string, def: any): string {
+  const modelData = parseModelDef(fileName, def)
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/model.mustache")
   ).toString()
@@ -121,8 +131,8 @@ function generateModel (fileName: string, props: any): string {
   )
 }
 
-function generateParser (fileName: string, props: any): string {
-  const modelData = parseModelDef(fileName, props)
+function generateParser (fileName: string, def: any): string {
+  const modelData = parseModelDef(fileName, def)
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/parser.mustache")
   ).toString()
@@ -160,9 +170,9 @@ export default function generate(options: GenerateOption) {
     const text = fs.readFileSync(targetFilePath).toString()
     const def = toml.parse(text)
     const fileName = path.basename(targetFile).split(".")[0]
-    const classFileData = generateModel(fileName, def.props)
+    const classFileData = generateModel(fileName, def)
     fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
-    const parserFileData = generateParser(fileName, def.props)
+    const parserFileData = generateParser(fileName, def)
     fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
   })
 }

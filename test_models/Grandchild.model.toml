@@ -1,2 +1,4 @@
+description = "This is the child of Parent model."
+
 [props.name]
 type = "string"

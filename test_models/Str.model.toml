@@ -1,3 +1,5 @@
+description = "Str class with various formats."
+
 [props.str]
 description = "string value prop."
 type = "string"
