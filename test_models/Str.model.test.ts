@@ -2,13 +2,11 @@ import Str, { InvalidPropertyError, } from "./Str.model"
 
 const LENGTH_1 = "0"
 const LENGTH_5 = "01234"
-const LENGTH_10 = "0123456789"
 const URL = "http://google.com"
 const EMAIL = "who@example.com"
 const UUID = "051261a9-8a87-44e2-8cc7-16597e1f014f"
 const APPLE = "apple"
 const LOWERCASE = "skywalker"
-
 
 test("Just create with valid values.", () => {
   const obj = new Str(

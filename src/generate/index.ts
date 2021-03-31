@@ -36,7 +36,7 @@ function parseProps (props: any[]) {
     } else if (def.type.startsWith("ref:")) {
       isModel = true
       type = def.type.replace(/^ref:/, "")
-      importFilePath = `./${type}.model`
+      importFilePath = `./${type}`
     }
     if (type) {
       parsedProps.push({

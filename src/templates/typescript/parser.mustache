@@ -3,10 +3,10 @@
 // PLEASE DO NOT EDIT. If you want to extend the functionality, please import
 // the export members and use as a part or inherit class.
 
-import {{class}} from "./{{class}}"
+import {{class}} from "./{{class}}.model"
 {{#props}}
 {{#importFilePath}}
-import {{type}} from "{{{importFilePath}}}"
+import {{type}} from "{{{importFilePath}}}.model"
 import parse{{type}} from "{{{importFilePath}}}.parser"
 {{/importFilePath}}
 {{/props}}
@@ -19,7 +19,7 @@ export class ParseError extends Error {
 
 export default function parse{{class}} (data: any) {
   if (typeof data !== "object") {
-    throw new ParseError("Given data is not an object.")
+    throw new ParseError("Given data is not an object. " + String(data))
   }
   {{#props}}
   {{#importFilePath}}
@@ -46,7 +46,7 @@ export default function parse{{class}} (data: any) {
     throw new ParseError("{{name}} is not an array")
   }
   for (let i = 0; i < {{name}}.length; i++) {
-    if ({{name}}[i] !== "{{type}}") {
+    if (typeof {{name}}[i] !== "{{type}}") {
       throw new ParseError(`Item of {{name}} with index ${i} is not a {{type}}.`)
     }
   }
