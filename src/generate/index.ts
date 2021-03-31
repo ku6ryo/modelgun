@@ -10,8 +10,8 @@ import { PrimitiveType, STRING_TYPES, NUMBER_TYPES, BooleanType, } from "./const
 function parseProps (props: any[]) {
   const parsedProps = []
   for (let name in props) {
-    const propertyCamelCase = camelCase(name)
-    const propertyPascalCase = camelCase(name, { pascalCase: true })
+    const nameCamelCase = camelCase(name)
+    const namePascalCase = camelCase(name, { pascalCase: true })
     const def = props[name]
     let description = def.description || null
     let type = null
@@ -43,11 +43,11 @@ function parseProps (props: any[]) {
       parsedProps.push({
         name,
         description,
-        nameCamelCase: propertyCamelCase,
-        namePascalCase: propertyPascalCase,
-        setterName: `set${propertyPascalCase}`,
-        getterName: `get${propertyPascalCase}`,
-        checkerName: `check${propertyPascalCase}`,
+        nameCamelCase: nameCamelCase,
+        namePascalCase: namePascalCase,
+        setterName: `set${namePascalCase}`,
+        getterName: `get${namePascalCase}`,
+        checkerName: `check${namePascalCase}`,
         type,
         isString,
         isNumber,
