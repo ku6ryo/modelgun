@@ -1,7 +1,6 @@
 import generate from "./generate"
 
 console.log("Model Gen")
-console.log(process.argv)
 
 enum Command {
   GENERATE = "gen"
@@ -16,8 +15,17 @@ switch (command) {
     break
 }
 
+/**
+ * Generate command interface.
+ */
 function generateInterface (args: string[]) {
-  generate({
-    targetDir: args[0]
-  })
+  console.log("Generating models")
+  try {
+    generate({
+      targetDir: args[0]
+    })
+  } catch (e) {
+    console.log("Failed with Error")
+    console.log(e)
+  }
 }

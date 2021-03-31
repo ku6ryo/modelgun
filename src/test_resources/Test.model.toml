@@ -14,6 +14,10 @@ regex = "[a-Z]+"
 description = "string array prop"
 type = "string"
 array = true
+[props.strCandidates]
+description = "string candidates prop"
+type = "string"
+candidates = ["apple", "banana"]
 [props.uuid]
 description = "UUID prop."
 type = "uuid"
@@ -23,18 +27,21 @@ type = "email"
 [props.url]
 type = "url"
 [props.num]
-type = "number"
+type = "float"
 [props.numArray]
-type = "number"
+type = "int"
 array = true
 [props.int]
 type = "int"
 [props.numMinMax]
-type = "number"
-min = -10
+type = "float"
+min = -10.1
 max = 10
+[props.numCandidates]
+type = "int"
+candidates = [1, -2]
 [props.child]
-type = "ref:./Child"
+type = "ref:Child"
 [props.children]
-type = "ref:./Child"
+type = "ref:Child"
 array = true

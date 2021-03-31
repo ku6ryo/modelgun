@@ -1,4 +1,4 @@
 [props.str]
 type = "string"
 [props.num]
-type = "number"
+type = "float"

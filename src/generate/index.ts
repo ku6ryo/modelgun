@@ -3,106 +3,9 @@ import * as path from "path"
 import toml from "toml"
 import mustache from "mustache"
 import camelCase from "camelcase"
-
-enum PrimitiveType {
-  STRING = "string",
-  NUMBER = "number",
-  BOOLEAN = "boolean",
-}
-
-enum StringType {
-  STRING = "string",
-  UUID = "uuid",
-  EMAIL = "email",
-  URL = "url",
-}
-
-enum NumberType {
-  NUMBER = "number",
-  INTERGER = "int",
-}
-
-enum BooleanType {
-  BOOLEAN = "boolean"
-}
-
-const STRING_TYPES = [
-  StringType.STRING,
-  StringType.EMAIL,
-  StringType.URL,
-  StringType.UUID,
-]
-const NUMBER_TYPES = [
-  NumberType.NUMBER,
-  NumberType.INTERGER,
-]
-
-type BaseTypeDef = {
-  type: string
-  isArray: boolean
-}
-
-type NumberPropDef = {
-  max: null | number
-  min: null | number
-  isInt: boolean
-}
-
-type StringPropDef = {
-  isUuid: boolean
-  isEmail: boolean
-  regex: null | string
-  maxLength: null | number
-  minLength: null | number
-}
-
-function parseNumberDef (def: any): NumberPropDef {
-  let max = null
-  let min = null
-  let isInt = false
-  if (typeof def.min === "number") {
-    min = def.min
-  }
-  if (typeof def.max === "number") {
-    max = def.max
-  }
-  isInt = def.type === NumberType.INTERGER
-  return {
-    max,
-    min,
-    isInt,
-  }
-}
-
-function parseStringDef (def: any): StringPropDef {
-  let isUuid = false
-  let isEmail = false
-  let regex = null
-  let maxLength = null
-  let minLength = null
-  if (typeof def.maxLength === "number"
-    && def.maxLength > 0
-  ) {
-    maxLength = def.maxLength
-  }
-  if (typeof def.minLength === "number"
-    && def.minLength >= 0
-  ) {
-    minLength = def.minLength
-  }
-  if (typeof def.regex === "string") {
-    regex = def.regex
-  }
-  isUuid = def.type === StringType.UUID
-  isEmail = def.type === StringType.EMAIL
-  return {
-    isUuid,
-    isEmail,
-    regex,
-    maxLength,
-    minLength,
-  }
-}
+import parseStringDef, { StringPropDef, } from "./parseStringDef"
+import parseNumberDef, { NumberPropDef, } from "./parseNumberDef"
+import { PrimitiveType, STRING_TYPES, NUMBER_TYPES, BooleanType, } from "./constants"
 
 function parseProps (props: any[]) {
   const parsedProps = []
@@ -124,8 +27,8 @@ function parseProps (props: any[]) {
     } else if (def.type === BooleanType.BOOLEAN) {
       type = BooleanType.BOOLEAN
     } else if (def.type.startsWith("ref:")) {
-      importFilePath = def.type.replace(/^ref:/, "")
-      type = importFilePath.replace(/^[^/]\//, "")
+      type = def.type.replace(/^ref:/, "")
+      importFilePath = `./${type}.model`
     }
     if (type) {
       parsedProps.push({
@@ -146,7 +49,7 @@ function parseProps (props: any[]) {
   return parsedProps
 }
 
-function parseModelData (className: string, props: any) {
+function parseModelDef (fileName: string, props: any) {
   const parsedProps = parseProps(props)
   // Checks validations requires libraries.
   const hasUuid = parsedProps.some(p => {
@@ -158,7 +61,7 @@ function parseModelData (className: string, props: any) {
     return prop.isEmail === true
   })
   return {
-    class: className,
+    class: fileName,
     props: parsedProps,
     hasUuid,
     hasEmail,
@@ -191,20 +94,20 @@ function removeDuplicatedImports(code: string) {
   return lines.filter((_, i) => !duplicatedLineNumbers.includes(i)).join("\n")
 }
 
-function generateClass (className: string, props: any): string {
-  const modelData = parseModelData(className, props)
+function generateModel (fileName: string, props: any): string {
+  const modelData = parseModelDef(fileName, props)
   const templateData = fs.readFileSync(
-    path.join(__dirname, "./templates/typescript/model.mustache")
+    path.join(__dirname, "../templates/typescript/model.mustache")
   ).toString()
   return removeDuplicatedImports(
     mustache.render(templateData, modelData)
   )
 }
 
-function generateParser (className: string, props: any): string {
-  const modelData = parseModelData(className, props)
+function generateParser (fileName: string, props: any): string {
+  const modelData = parseModelDef(fileName, props)
   const templateData = fs.readFileSync(
-    path.join(__dirname, "./templates/typescript/parser.mustache")
+    path.join(__dirname, "../templates/typescript/parser.mustache")
   ).toString()
   return removeDuplicatedImports(
     mustache.render(templateData, modelData)
@@ -226,20 +129,23 @@ type GenerateOption = {
  * @param options GenerateOption
  */
 export default function generate(options: GenerateOption) {
-  const targetDir = options.targetDir
+  const { targetDir, } = options
+  if (!fs.existsSync(targetDir)) {
+    throw new Error("Target dirctory does not exist. " + targetDir)
+  }
   const candidateFiles = fs.readdirSync(targetDir)
   const targetFiles = candidateFiles.filter(filePath => {
     return isModelDefFile(filePath)
   })
   targetFiles.forEach(targetFile => {
-    const targetFilePath = targetDir + "/" + targetFile
+    const targetFilePath = path.join(targetDir, targetFile)
     console.log(targetFile)
     const text = fs.readFileSync(targetFilePath).toString()
     const def = toml.parse(text)
-    const className = path.basename(targetFile).split(".")[0]
-    const classFileData = generateClass(className, def.props)
-    fs.writeFileSync(path.join(targetDir, className + ".ts"), classFileData)
-    const parserFileData = generateParser(className, def.props)
-    fs.writeFileSync(path.join(targetDir, className + ".parser.ts"), parserFileData)
+    const fileName = path.basename(targetFile).split(".")[0]
+    const classFileData = generateModel(fileName, def.props)
+    fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
+    const parserFileData = generateParser(fileName, def.props)
+    fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
   })
 }
