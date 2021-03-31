@@ -65,6 +65,16 @@ export default class {{class}} {
    * Checks {{name}}
    */
   {{checkerName}} (value: {{type}}) {
+    {{#hasCandidates}}
+    {{#isString}}
+    if (![{{#candidates}}"{{.}}", {{/candidates}}].includes(value)) {
+    {{/isString}}
+    {{#isNumber}}
+    if (![{{#candidates}}{{.}}, {{/candidates}}].includes(value)) {
+    {{/isNumber}}
+      throw new InvalidPropertyError(`${value} is not of candidates. ({{class}}.{{setterName}})`)
+    }
+    {{/hasCandidates}}
     {{#isUuid}}
     if (!isUuid(value)) {
       throw new InvalidPropertyError(`${value} is not UUID value. ({{class}}.{{setterName}})`)

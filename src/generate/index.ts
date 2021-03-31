@@ -15,18 +15,26 @@ function parseProps (props: any[]) {
     const def = props[name]
     let description = def.description || null
     let type = null
+    let isString = false
+    let isNumber = false
+    let isBoolean = false
+    let isModel = false
     let importFilePath = null
     let isArray = def.array === true
     let parsed: StringPropDef | NumberPropDef | null = null
     if (STRING_TYPES.includes(def.type)) {
+      isString = true
       type = PrimitiveType.STRING
       parsed = parseStringDef(def)
     } else if (NUMBER_TYPES.includes(def.type)) {
+      isNumber = true
       type = PrimitiveType.NUMBER
       parsed = parseNumberDef(def)
     } else if (def.type === BooleanType.BOOLEAN) {
+      isBoolean = true
       type = BooleanType.BOOLEAN
     } else if (def.type.startsWith("ref:")) {
+      isModel = true
       type = def.type.replace(/^ref:/, "")
       importFilePath = `./${type}.model`
     }
@@ -39,9 +47,13 @@ function parseProps (props: any[]) {
         setterName: `set${propertyPascalCase}`,
         getterName: `get${propertyPascalCase}`,
         checkerName: `check${propertyPascalCase}`,
+        type,
+        isString,
+        isNumber,
+        isBoolean,
+        isModel,
         isArray,
         importFilePath,
-        type,
         ...parsed
       })
     }

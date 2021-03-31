@@ -6,6 +6,8 @@ export type StringPropDef = {
   regex: null | string
   maxLength: null | number
   minLength: null | number
+  hasCandidates: boolean
+  candidates: null | string[]
 }
 
 export default function parseStringDef (def: any): StringPropDef {
@@ -14,6 +16,7 @@ export default function parseStringDef (def: any): StringPropDef {
   let regex = null
   let maxLength = null
   let minLength = null
+  let candidates = null
   if (typeof def.maxLength === "number"
     && def.maxLength > 0
   ) {
@@ -29,11 +32,21 @@ export default function parseStringDef (def: any): StringPropDef {
   }
   isUuid = def.type === StringType.UUID
   isEmail = def.type === StringType.EMAIL
+  if (Array.isArray(def.candidates)) {
+    candidates = def.candidates
+    candidates.forEach((c: any) => {
+      if (typeof c !== "string") {
+        throw new Error("a candidate of a number property is not number")
+      }
+    })
+  }
   return {
     isUuid,
     isEmail,
     regex,
     maxLength,
     minLength,
+    hasCandidates: !!candidates,
+    candidates,
   }
 }
