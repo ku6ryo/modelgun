@@ -21,6 +21,7 @@ test("Just create with valid values.", () => {
     EMAIL,
     URL,
   )
+  expect(obj.getStr()).toBe(LENGTH_1)
 })
 
 test("Invalid: Less than min.", () => {
