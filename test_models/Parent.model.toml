@@ -1,0 +1,5 @@
+[props.child]
+type = "ref:Child"
+[props.children]
+type = "ref:Child"
+array = true

@@ -9,13 +9,13 @@ import {{type}} from "{{{importFilePath}}}"
 {{/importFilePath}}
 {{/props}}
 {{#hasUuid}}
-import isUuid from "validator/es/lib/isUuid"
+import isUuid from "validator/lib/isUuid"
 {{/hasUuid}}
 {{#hasEmail}}
-import isEmail from "validator/es/lib/isEmail"
+import isEmail from "validator/lib/isEmail"
 {{/hasEmail}}
 {{#hasUrl}}
-import isUrl from "validator/es/lib/isUrl"
+import isUrl from "validator/lib/isUrl"
 {{/hasUrl}}
 
 export class UnexpectedNullError extends Error {

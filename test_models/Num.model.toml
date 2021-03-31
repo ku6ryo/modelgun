@@ -1,0 +1,14 @@
+[props.num]
+type = "float"
+[props.numArray]
+type = "int"
+array = true
+[props.int]
+type = "int"
+[props.numMinMax]
+type = "float"
+min = -10.1
+max = 10
+[props.numCandidates]
+type = "int"
+candidates = [1, -2]

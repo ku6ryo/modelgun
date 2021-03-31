@@ -66,17 +66,22 @@ function parseModelDef (fileName: string, props: any) {
   // Checks validations requires libraries.
   const hasUuid = parsedProps.some(p => {
     const prop = p as any
-    return prop.isUUid === true
+    return prop.isUuid === true
   })
   const hasEmail = parsedProps.some(p => {
     const prop = p as any
     return prop.isEmail === true
+  })
+  const hasUrl = parsedProps.some(p => {
+    const prop = p as any
+    return prop.isUrl === true
   })
   return {
     class: fileName,
     props: parsedProps,
     hasUuid,
     hasEmail,
+    hasUrl,
   }
 }
 

@@ -1,6 +1,4 @@
 [props.str]
 type = "string"
-[props.num]
-type = "float"
 [props.child]
 type = "ref:Grandchild"

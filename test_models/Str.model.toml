@@ -4,12 +4,12 @@ type = "string"
 [props.strMinMaxLength]
 description = "string value prop with min / max length."
 type = "string"
-minLength = 1
-maxLength = 256
+minLength = 2
+maxLength = 8
 [props.strRegex]
 description = "string value prop with regex condition."
 type = "string"
-regex = "[a-Z]+"
+regex = "^[a-z]+$"
 [props.strArray]
 description = "string array prop"
 type = "string"
@@ -26,22 +26,3 @@ description = "Email prop."
 type = "email"
 [props.url]
 type = "url"
-[props.num]
-type = "float"
-[props.numArray]
-type = "int"
-array = true
-[props.int]
-type = "int"
-[props.numMinMax]
-type = "float"
-min = -10.1
-max = 10
-[props.numCandidates]
-type = "int"
-candidates = [1, -2]
-[props.child]
-type = "ref:Child"
-[props.children]
-type = "ref:Child"
-array = true
