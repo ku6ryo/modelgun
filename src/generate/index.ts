@@ -87,8 +87,8 @@ function parseModelDef (fileName: string, def: any) {
     const prop = p as any
     return prop.isUrl === true
   })
-  const generateFaker = generate.faker !== false && parsedProps.every(p => !!p.faker)
-  const generateParser = generate.parser !== false
+  const generateFaker = !generate || generate.faker !== false && parsedProps.every(p => !!p.faker)
+  const generateParser = !generate || generate.parser !== false
   return {
     class: fileName,
     header: header || null,
