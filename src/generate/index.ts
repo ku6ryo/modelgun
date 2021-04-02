@@ -128,7 +128,7 @@ function removeDuplicatedImports(code: string) {
   return lines.filter((_, i) => !duplicatedLineNumbers.includes(i)).join("\n")
 }
 
-function generateModel (fileName: string, modelDef: any): string {
+function generateModel (modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/model.mustache")
   ).toString()
@@ -137,7 +137,7 @@ function generateModel (fileName: string, modelDef: any): string {
   )
 }
 
-function generateParser (fileName: string, modelDef: any): string {
+function generateParser (modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/parser.mustache")
   ).toString()
@@ -146,7 +146,7 @@ function generateParser (fileName: string, modelDef: any): string {
   )
 }
 
-function generateFaker (fileName: string, modelDef: any): string {
+function generateFaker (modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/faker.mustache")
   ).toString()
@@ -185,14 +185,14 @@ export default function generate(options: GenerateOption) {
     const def = toml.parse(text)
     const fileName = path.basename(targetFile).split(".")[0]
     const parsedDef = parseModelDef(fileName, def)
-    const classFileData = generateModel(fileName, parsedDef)
+    const classFileData = generateModel(parsedDef)
     fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
     if (parsedDef.generateFaker) {
-      const parserFileData = generateParser(fileName, parsedDef)
-      fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
+      const parserFileData = generateParser(parsedDef)
+      fs.writeFileSync(path.join(targetDir, ".parser.ts"), parserFileData)
     }
     if (parsedDef.generateFaker) {
-      const fakerFileData = generateFaker(fileName, def)
+      const fakerFileData = generateFaker(parsedDef)
       fs.writeFileSync(path.join(targetDir, fileName + ".faker.ts"), fakerFileData)
     }
   })
