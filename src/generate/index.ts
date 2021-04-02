@@ -22,6 +22,7 @@ function parseProps (props: any[]) {
     let importFilePath = null
     let isArray = def.array === true
     let customValidator = def.customValidator || null
+    let faker = def.faker || null
     let parsed: StringPropDef | NumberPropDef | null = null
     if (STRING_TYPES.includes(def.type)) {
       isString = true
@@ -56,6 +57,7 @@ function parseProps (props: any[]) {
         isArray,
         importFilePath,
         customValidator,
+        faker,
         ...parsed
       })
     }
@@ -142,6 +144,16 @@ function generateParser (fileName: string, def: any): string {
   )
 }
 
+function generateFaker (fileName: string, def: any): string {
+  const modelData = parseModelDef(fileName, def)
+  const templateData = fs.readFileSync(
+    path.join(__dirname, "../templates/typescript/faker.mustache")
+  ).toString()
+  return removeDuplicatedImports(
+    mustache.render(templateData, modelData)
+  )
+}
+
 function isModelDefFile(filePath: string) {
   const parts = path.basename(filePath).split(".")
   return parts.length === 3 && parts[1] === "model" && parts[2] === "toml"
@@ -175,5 +187,7 @@ export default function generate(options: GenerateOption) {
     fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
     const parserFileData = generateParser(fileName, def)
     fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
+    const fakerFileData = generateFaker(fileName, def)
+    fs.writeFileSync(path.join(targetDir, fileName + ".faker.ts"), fakerFileData)
   })
 }

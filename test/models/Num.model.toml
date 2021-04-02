@@ -1,5 +1,6 @@
 [props.num]
 type = "float"
+faker = "random.float"
 [props.numArray]
 type = "int"
 array = true

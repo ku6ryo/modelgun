@@ -3,47 +3,51 @@
 // PLEASE DO NOT EDIT. If you want to extend the functionality, please import
 // the export members and use as a part or inherit class.
 
+import faker from "faker"
 import {{class}} from "./{{class}}.model"
 {{#props}}
 {{#isModel}}
 import {{type}} from "{{{importFilePath}}}.model"
-import parse{{type}} from "{{{importFilePath}}}.parser"
+import fake{{type}} from "{{{importFilePath}}}.faker"
 {{/isModel}}
 {{/props}}
 
-export class ParseError extends Error {
+export class FakeError extends Error {
   constructor (message: string) {
-    super("parse{{class}} ParseError: " + message)
+    super("fake{{class}} FakeError: " + message)
   }
 }
 
-export default function parse{{class}} (data: any) {
-  if (typeof data !== "object") {
-    throw new ParseError("Given data is not an object. " + String(data))
+export default function fake{{class}} (data?: any): {{class}} {
+  if (data && typeof data !== "object") {
+    throw new FakeError("Given data is not an object. " + String(data))
   }
   {{#props}}
   {{#isModel}}
   {{#isArray}}
   const tmp_{{name}} = data["{{name}}"]
-  if (!Array.isArray(tmp_{{name}})) {
-    throw new ParseError("{{name}} is not an array")
-  }
-  const {{name}}: {{type}}[] = tmp_{{name}}.map((item, i) => {
-    if (typeof item !== "object") {
-      throw new ParseError(`Item of {{name}} with index ${i} is not a object.`)
+  let {{name}}: {{type}}[] = []
+  if (tmp_{{name}}) {
+    if (!Array.isArray(tmp_{{name}})) {
+      throw new FakeError("{{name}} is not an array")
     }
-    return parse{{type}}(item)
-  })
+    {{name}} = tmp_{{name}}.map((item, i) => {
+      if (typeof item !== "object") {
+        throw new FakeError(`Item of {{name}} with index ${i} is not a object.`)
+      }
+      return fake{{type}}(item)
+    })
+  }
   {{/isArray}}
   {{^isArray}}
-  const {{name}}: {{type}} = parse{{type}}(data["{{name}}"])
+  const {{name}}: {{type}} = fake{{type}}(data["{{name}}"])
   {{/isArray}}
   {{/isModel}}
   {{^isModel}}
-  const {{name}}: {{type}} = data["{{name}}"]
   {{#isArray}}
+  const {{name}}: {{type}} = data["{{name}}"] || []
   if (!Array.isArray({{name}})) {
-    throw new ParseError("{{name}} is not an array")
+    throw new FakeError("{{name}} is not an array")
   }
   for (let i = 0; i < {{name}}.length; i++) {
     if (typeof {{name}}[i] !== "{{type}}") {
@@ -52,8 +56,9 @@ export default function parse{{class}} (data: any) {
   }
   {{/isArray}}
   {{^isArray}}
+  const {{name}}: {{type}} = data["{{name}}"] || faker.{{faker}}()
   if (typeof {{name}} !== "{{type}}") {
-    throw new ParseError("{{name}} is not a {{type}}")
+    throw new FakeError("{{name}} is not a {{type}}")
   }
   {{/isArray}}
   {{/isModel}}

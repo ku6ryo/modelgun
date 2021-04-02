@@ -5,11 +5,20 @@ header = "
 // You can specify anythin like imports from non-supported validators.
 // import isFoo from \"bar/isFoo\"
 "
+[generate]
+parser = true
+faker = true
 
-[props.prop1]
+[props.id]
+type = "uuid"
+faker = "random.uuid"
+[props.firstName]
 type = "string"
-description = "str prop"
-[props.prop2]
+description = "First Name"
+faker = "name.firstName"
+[props.age]
 type = "int"
-[props.prop3]
+faker = "random.number"
+[props.isAlien]
 type = "boolean"
+faker = "random.boolean"

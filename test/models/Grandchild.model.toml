@@ -2,3 +2,4 @@ description = "This is the child of Child model."
 
 [props.name]
 type = "string"
+faker = "name.findName"

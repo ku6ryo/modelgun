@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/faker": "^5.5.0",
     "@types/jest": "^26.0.22",
     "camelcase": "^6.2.0",
+    "faker": "^5.5.2",
     "jest": "^26.6.3",
     "minimist": "^1.2.5",
     "mustache": "^4.2.0",
