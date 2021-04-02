@@ -66,7 +66,7 @@ function parseProps (props: any[]) {
 }
 
 function parseModelDef (fileName: string, def: any) {
-  const { header, description, props, } = def
+  const { header, description, props, generate, } = def
   if (header !== undefined && typeof header !== "string") {
     throw new Error("Header must be a string.")
   }
@@ -87,6 +87,8 @@ function parseModelDef (fileName: string, def: any) {
     const prop = p as any
     return prop.isUrl === true
   })
+  const generateFaker = generate.faker !== false && parsedProps.every(p => !!p.faker)
+  const generateParser = generate.parser !== false
   return {
     class: fileName,
     header: header || null,
@@ -95,6 +97,8 @@ function parseModelDef (fileName: string, def: any) {
     hasUuid,
     hasEmail,
     hasUrl,
+    generateFaker,
+    generateParser,
   }
 }
 
@@ -124,33 +128,30 @@ function removeDuplicatedImports(code: string) {
   return lines.filter((_, i) => !duplicatedLineNumbers.includes(i)).join("\n")
 }
 
-function generateModel (fileName: string, def: any): string {
-  const modelData = parseModelDef(fileName, def)
+function generateModel (fileName: string, modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/model.mustache")
   ).toString()
   return removeDuplicatedImports(
-    mustache.render(templateData, modelData)
+    mustache.render(templateData, modelDef)
   )
 }
 
-function generateParser (fileName: string, def: any): string {
-  const modelData = parseModelDef(fileName, def)
+function generateParser (fileName: string, modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/parser.mustache")
   ).toString()
   return removeDuplicatedImports(
-    mustache.render(templateData, modelData)
+    mustache.render(templateData, modelDef)
   )
 }
 
-function generateFaker (fileName: string, def: any): string {
-  const modelData = parseModelDef(fileName, def)
+function generateFaker (fileName: string, modelDef: any): string {
   const templateData = fs.readFileSync(
     path.join(__dirname, "../templates/typescript/faker.mustache")
   ).toString()
   return removeDuplicatedImports(
-    mustache.render(templateData, modelData)
+    mustache.render(templateData, modelDef)
   )
 }
 
@@ -183,11 +184,16 @@ export default function generate(options: GenerateOption) {
     const text = fs.readFileSync(targetFilePath).toString()
     const def = toml.parse(text)
     const fileName = path.basename(targetFile).split(".")[0]
-    const classFileData = generateModel(fileName, def)
+    const parsedDef = parseModelDef(fileName, def)
+    const classFileData = generateModel(fileName, parsedDef)
     fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
-    const parserFileData = generateParser(fileName, def)
-    fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
-    const fakerFileData = generateFaker(fileName, def)
-    fs.writeFileSync(path.join(targetDir, fileName + ".faker.ts"), fakerFileData)
+    if (parsedDef.generateFaker) {
+      const parserFileData = generateParser(fileName, parsedDef)
+      fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
+    }
+    if (parsedDef.generateFaker) {
+      const fakerFileData = generateFaker(fileName, def)
+      fs.writeFileSync(path.join(targetDir, fileName + ".faker.ts"), fakerFileData)
+    }
   })
 }
