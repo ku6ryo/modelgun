@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen:test": "ts-node ./src/index.ts gen ./test_models",
+    "gen:test": "ts-node ./src/index.ts gen ./test/models",
     "test": "jest",
     "test:model": "yarn gen:test && jest"
   },

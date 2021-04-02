@@ -1,7 +1,7 @@
 description = "This is the base model to test settings"
 header = "
-import isOne from \"../test_validators/isOne\"
-import isA from \"../test_validators/isA\"
+import isOne from \"../validators/isOne\"
+import isA from \"../validators/isA\"
 "
 
 [props.a]
