@@ -7,8 +7,8 @@ import faker from "faker"
 import {{class}} from "./{{class}}.model"
 {{#props}}
 {{#isModel}}
-import {{type}} from "{{{importFilePath}}}.model"
-import fake{{type}} from "{{{importFilePath}}}.faker"
+import {{type}} from "{{{modelImportPath}}}.model"
+import fake{{type}} from "{{{modelImportPath}}}.faker"
 {{/isModel}}
 {{/props}}
 

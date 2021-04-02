@@ -19,7 +19,7 @@ function parseProps (props: any[]) {
     let isNumber = false
     let isBoolean = false
     let isModel = false
-    let importFilePath = null
+    let modelImportPath = null
     let isArray = def.array === true
     let customValidator = def.customValidator || null
     let faker = def.faker || null
@@ -38,7 +38,7 @@ function parseProps (props: any[]) {
     } else if (def.type.startsWith("ref:")) {
       isModel = true
       type = def.type.replace(/^ref:/, "")
-      importFilePath = `./${type}`
+      modelImportPath = `./${type}`
     }
     if (type) {
       parsedProps.push({
@@ -55,7 +55,7 @@ function parseProps (props: any[]) {
         isBoolean,
         isModel,
         isArray,
-        importFilePath,
+        modelImportPath,
         customValidator,
         faker,
         ...parsed
