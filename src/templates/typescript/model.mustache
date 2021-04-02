@@ -131,7 +131,6 @@ export default class {{class}} {
     {{/customValidator}}
   }
 
-
   /**
    * Sets {{name}}
    * @param value
@@ -148,4 +147,20 @@ export default class {{class}} {
     this.#{{name}} = value
   }
   {{/props}}
+
+  /**
+   * Clones {{name}}
+   */
+  clone (shallow: boolean) {
+    return new {{class}} (
+      {{#props}}
+      {{#isModel}}
+      shallow ? this.{{getterName}}() : this.{{getterName}}().clone(false),
+      {{/isModel}}
+      {{^isModel}}
+      this.{{getterName}}(),
+      {{/isModel}}
+      {{/props}}
+    )
+  }
 }
