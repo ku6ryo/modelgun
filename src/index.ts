@@ -1,18 +1,18 @@
 import generate from "./generate"
 
-console.log("Model Gen")
-
 enum Command {
   GENERATE = "gen"
 }
 
-const command = process.argv[2]
-switch (command) {
-  case Command.GENERATE:
-    generateInterface(process.argv.slice(3))
-    break
-  default:
-    break
+export default function main () {
+  const command = process.argv[2]
+  switch (command) {
+    case Command.GENERATE:
+      generateInterface(process.argv.slice(3))
+      break
+    default:
+      break
+  }
 }
 
 /**
