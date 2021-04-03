@@ -1,10 +1,10 @@
 {
   "name": "modelgun",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Data model file auto generator.",
   "bin": "cli.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc ./src/index.ts",
     "gen:test": "ts-node ./src/index.ts gen ./test/models",
     "test": "jest",
     "test:model": "yarn gen:test && jest"

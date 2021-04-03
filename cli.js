@@ -1,2 +1,2 @@
 const main = require("./dist/index")
-main()
+main.default()
