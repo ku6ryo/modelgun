@@ -163,4 +163,20 @@ export default class {{class}} {
       {{/props}}
     )
   }
+
+  /**
+   * Creates an object.
+   */
+  toObject () {
+    return {
+      {{#props}}
+      {{#isModel}}
+      {{name}}: this.{{getterName}}().toObject(),
+      {{/isModel}}
+      {{^isModel}}
+      {{name}}: this.{{getterName}}(),
+      {{/isModel}}
+      {{/props}}
+    }
+  }
 }

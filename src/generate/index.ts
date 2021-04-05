@@ -187,9 +187,9 @@ export default function generate(options: GenerateOption) {
     const parsedDef = parseModelDef(fileName, def)
     const classFileData = generateModel(parsedDef)
     fs.writeFileSync(path.join(targetDir, fileName + ".model.ts"), classFileData)
-    if (parsedDef.generateFaker) {
+    if (parsedDef.generateParser) {
       const parserFileData = generateParser(parsedDef)
-      fs.writeFileSync(path.join(targetDir, ".parser.ts"), parserFileData)
+      fs.writeFileSync(path.join(targetDir, fileName + ".parser.ts"), parserFileData)
     }
     if (parsedDef.generateFaker) {
       const fakerFileData = generateFaker(parsedDef)

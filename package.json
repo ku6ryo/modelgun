@@ -8,6 +8,7 @@
     "url": "https://github.com/ku6ryo/modelgun.git"
   },
   "scripts": {
+    "dev": "ts-node ./src/dev.ts",
     "build": "tsc ./src/index.ts",
     "gen:test": "ts-node ./src/index.ts gen ./test/models",
     "test": "jest",
