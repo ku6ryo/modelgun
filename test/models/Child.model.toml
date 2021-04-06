@@ -3,5 +3,6 @@ description = "This is the child of Parent model."
 [props.name]
 type = "string"
 faker = "name.findName"
-[props.child]
+[props.children]
 type = "ref:Grandchild"
+array = true

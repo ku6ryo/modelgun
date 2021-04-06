@@ -48,14 +48,14 @@ faker = true
 `prop` Defines model properties. Property name follows after `prop`.
 
 ```
-[prop.name]
+[props.name]
 type = "string"
 ```
 
 ### type
 Type of property. Please use supported types.
 ```
-[prop.str]
+[props.str]
 type = "int"
 ```
 

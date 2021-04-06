@@ -154,12 +154,22 @@ export default class {{class}} {
   clone (shallow: boolean) {
     return new {{class}} (
       {{#props}}
+      {{#isArray}}
+      {{#isModel}}
+      shallow ? this.{{getterName}}() : this.{{getterName}}().map(item => item.clone(false)),
+      {{/isModel}}
+      {{^isModel}}
+      shallow ? this.{{getterName}}() : this.{{getterName}}().map(item => item),
+      {{/isModel}}
+      {{/isArray}}
+      {{^isArray}}
       {{#isModel}}
       shallow ? this.{{getterName}}() : this.{{getterName}}().clone(false),
       {{/isModel}}
       {{^isModel}}
       this.{{getterName}}(),
       {{/isModel}}
+      {{/isArray}}
       {{/props}}
     )
   }
@@ -170,12 +180,22 @@ export default class {{class}} {
   toObject () {
     return {
       {{#props}}
+      {{#isArray}}
+      {{#isModel}}
+      {{name}}: this.{{getterName}}().map(item => item.toObject()),
+      {{/isModel}}
+      {{^isModel}}
+      {{name}}: this.{{getterName}}().map(item => item),
+      {{/isModel}}
+      {{/isArray}}
+      {{^isArray}}
       {{#isModel}}
       {{name}}: this.{{getterName}}().toObject(),
       {{/isModel}}
       {{^isModel}}
       {{name}}: this.{{getterName}}(),
       {{/isModel}}
+      {{/isArray}}
       {{/props}}
     }
   }
