@@ -1,0 +1,48 @@
+description = "This is an example model of person."
+header = "
+// This is header
+// Multiple line.
+// You can specify anythin like imports from non-supported validators.
+// import isFoo from \"bar/isFoo\"
+"
+[generate]
+# You can specify whether to generate a parser for this model.
+parser = true
+# You can specify whether to generate a faker for this model.
+# This is for tests.
+faker = true
+
+# ID of a person.
+[props.id]
+# Using UUID type
+type = "uuid"
+# Description about this property.
+description = "First Name"
+# Specifies UUID faker function.
+faker = "random.uuid"
+
+# Name of a person.
+[props.name]
+# General string type.
+type = "string"
+description = "Name of a person."
+faker = "name.findName"
+
+[props.age]
+type = "int"
+description = "Age of aperson."
+faker = "random.number"
+min = 0
+max = 150
+
+[props.height]
+type = "float"
+description = "Height of a person in centi meters"
+faker = "random.number"
+min = 0
+max = 300
+
+[props.isAlien]
+type = "boolean"
+description = "Whether the person is alien or not."
+faker = "random.boolean"
