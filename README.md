@@ -35,7 +35,7 @@ yarn add --dev modelgun
 Modelgun uses [toml](https://github.com/toml-lang/toml) as the format of
 definition files. Use `[MODEL_NAME].model.toml` format for file names.
 `[MODEL_NAME].model.ts`, `[MODEL_NAME].parser.ts` and `[MODEL_NAME].faker.ts` (alpha)
-are generated for each model definition. See [Model definition file spec section][# Model definition file spec] for more details.
+are generated for each model definition. See [Model definition file spec section](# Model definition file spec) for more details.
 
 ## Run
 To run Modelgun generator, use following commands.
