@@ -7,6 +7,12 @@ import parseStringDef, { StringPropDef, } from "./parseStringDef"
 import parseNumberDef, { NumberPropDef, } from "./parseNumberDef"
 import { PrimitiveType, STRING_TYPES, NUMBER_TYPES, BooleanType, } from "./constants"
 
+class NullableArrayError extends Error {
+  constructor () {
+    super ("Array type cannot be nullable.")
+  }
+}
+
 function parseProps (props: any[]) {
   const parsedProps = []
   for (let name in props) {
@@ -25,6 +31,11 @@ function parseProps (props: any[]) {
     let customValidator = def.customValidator || null
     let faker = def.faker || null
     let parsed: StringPropDef | NumberPropDef | null = null
+
+    if (isArray && isNullable) {
+      throw new NullableArrayError()
+    }
+
     if (STRING_TYPES.includes(def.type)) {
       isString = true
       type = PrimitiveType.STRING
