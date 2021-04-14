@@ -36,11 +36,11 @@ export default function parse{{class}} (data: any) {
   })
   {{/isArray}}
   {{^isArray}}
-  const {{name}}: {{type}} = parse{{type}}(data["{{name}}"])
+  const {{name}}: {{type}}{{#isNullable}} | null{{/isNullable}} = {{#isNullable}}data["name"] === null ? null : {{/isNullable}}parse{{type}}(data["{{name}}"])
   {{/isArray}}
   {{/isModel}}
   {{^isModel}}
-  const {{name}}: {{type}} = data["{{name}}"]
+  const {{name}}: {{type}}{{#isNullable}} | null{{/isNullable}} = data["{{name}}"]
   {{#isArray}}
   if (!Array.isArray({{name}})) {
     throw new ParseError("{{name}} is not an array")

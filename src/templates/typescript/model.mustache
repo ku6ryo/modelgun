@@ -46,7 +46,7 @@ export default class {{class}} {
    */
   constructor (
   {{#props}}
-    {{name}}: {{type}}{{#isArray}}[]{{/isArray}},
+    {{name}}: {{type}}{{#isArray}}[]{{/isArray}}{{#isNullable}} | null{{/isNullable}},
   {{/props}}
   ) {
   {{#props}}
@@ -58,17 +58,24 @@ export default class {{class}} {
   /**
    * Gets {{name}}
    */
-  {{getterName}} (): {{type}}{{#isArray}}[]{{/isArray}} {
+  {{getterName}} (): {{type}}{{#isArray}}[]{{/isArray}}{{#isNullable}} | null{{/isNullable}} {
+    {{^isNullable}}
     if (this.#{{name}} === null) {
       throw new UnexpectedNullError()
     }
+    {{/isNullable}}
     return this.#{{name}}
   }
 
   /**
    * Checks {{name}}
    */
-  {{checkerName}} (value: {{type}}) {
+  {{checkerName}} (value: {{type}}{{#isNullable}} | null{{/isNullable}}) {
+    {{#isNullable}}
+    if (value === null) {
+      return
+    }
+    {{/isNullable}}
     {{#hasCandidates}}
     {{#isString}}
     if (![{{#candidates}}"{{.}}", {{/candidates}}].includes(value)) {
@@ -135,7 +142,7 @@ export default class {{class}} {
    * Sets {{name}}
    * @param value
    */
-  {{setterName}} (value: {{type}}{{#isArray}}[]{{/isArray}}) {
+  {{setterName}} (value: {{type}}{{#isArray}}[]{{/isArray}}{{#isNullable}} | null{{/isNullable}}) {
     {{#isArray}}
     for (let i  = 0; i < value.length; i++) {
       this.{{checkerName}}(value[i])
@@ -164,7 +171,7 @@ export default class {{class}} {
       {{/isArray}}
       {{^isArray}}
       {{#isModel}}
-      shallow ? this.{{getterName}}() : this.{{getterName}}().clone(false),
+      shallow ? {{#isNullable}}this.{{getterName}}() === null ? null : {{/isNullable}}this.{{getterName}}() : this.{{getterName}}(){{#isNullable}}!{{/isNullable}}.clone(false),
       {{/isModel}}
       {{^isModel}}
       this.{{getterName}}(),
@@ -190,7 +197,7 @@ export default class {{class}} {
       {{/isArray}}
       {{^isArray}}
       {{#isModel}}
-      {{name}}: this.{{getterName}}().toObject(),
+      {{name}}: {{#isNullable}}this.{{getterName}}() === null ? null : {{/isNullable}}this.{{getterName}}(){{#isNullable}}!{{/isNullable}}.toObject(),
       {{/isModel}}
       {{^isModel}}
       {{name}}: this.{{getterName}}(),

@@ -1,0 +1,13 @@
+description = "Model with nullable properties"
+
+[props.nullableInt]
+type = "int"
+null = true
+
+[props.nullableString]
+type = "string"
+null = true
+
+[props.nullableRef]
+type = "ref:NullableChild"
+null = true

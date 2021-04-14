@@ -1,0 +1,7 @@
+description = "Nullable properties"
+
+[props.nullableInt]
+type = "int"
+
+[props.nullableString]
+type = "string"

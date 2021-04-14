@@ -19,6 +19,7 @@ function parseProps (props: any[]) {
     let isNumber = false
     let isBoolean = false
     let isModel = false
+    let isNullable = def.null === true
     let modelImportPath = null
     let isArray = def.array === true
     let customValidator = def.customValidator || null
@@ -55,6 +56,7 @@ function parseProps (props: any[]) {
         isBoolean,
         isModel,
         isArray,
+        isNullable,
         modelImportPath,
         customValidator,
         faker,
@@ -87,7 +89,7 @@ function parseModelDef (fileName: string, def: any) {
     const prop = p as any
     return prop.isUrl === true
   })
-  const generateFaker = !generate || generate.faker !== false && parsedProps.every(p => !!p.faker)
+  const generateFaker = generate && generate.faker === true && parsedProps.every(p => !!p.faker)
   const generateParser = !generate || generate.parser !== false
   return {
     class: fileName,
