@@ -1,0 +1,9 @@
+description = "This is an example model of a parent."
+
+[generate]
+parser = true
+
+[props.children]
+type = "ref:Child"
+array = true
+description = "This property is for to hold models defined as another model."

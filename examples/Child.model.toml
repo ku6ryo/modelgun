@@ -1,0 +1,14 @@
+description = "Child model of Person model"
+
+[generate]
+parser = true
+faker = false
+
+[props.id]
+type = "uuid"
+
+[props.name]
+type = "string"
+
+[props.school]
+type = "string"

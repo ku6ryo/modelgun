@@ -12,7 +12,7 @@ import isUuid from "validator/lib/isUuid"
 
 export class UnexpectedNullError extends Error {
   constructor () {
-    super("Example UnexpectedNullError: If you see this, ModelGun validation may be broken.")
+    super("Example UnexpectedNullError: If you see this, generated code by modelgun may be broken.")
   }
 }
 
@@ -24,7 +24,7 @@ export class InvalidPropertyError extends Error {
 
 /**
  * Example model.
- * This is an example model of person.
+ * 
  */
 export default class Example {
   #id: string | null = null
@@ -34,7 +34,7 @@ export default class Example {
   #isAlien: boolean | null = null
 
   /**
-   * @param string id First Name
+   * @param string id ID of a person.
    * @param string name Name of a person.
    * @param number age Age of aperson.
    * @param number height Height of a person in centi meters

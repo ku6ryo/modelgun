@@ -1,4 +1,4 @@
-description = "This is an example model of person."
+datatypedescription = "This is an example model of person."
 header = "
 // This is header
 // Multiple line.
@@ -17,9 +17,9 @@ faker = true
 # Using UUID type
 type = "uuid"
 # Description about this property.
-description = "First Name"
+description = "ID of a person."
 # Specifies UUID faker function.
-faker = "random.uuid"
+faker = "datatype.uuid"
 
 # Name of a person.
 [props.name]
@@ -31,18 +31,18 @@ faker = "name.findName"
 [props.age]
 type = "int"
 description = "Age of aperson."
-faker = "random.number"
+faker = "datatype.number"
 min = 0
 max = 150
 
 [props.height]
 type = "float"
 description = "Height of a person in centi meters"
-faker = "random.number"
+faker = "datatype.number"
 min = 0
 max = 300
 
 [props.isAlien]
 type = "boolean"
 description = "Whether the person is alien or not."
-faker = "random.boolean"
+faker = "datatype.boolean"

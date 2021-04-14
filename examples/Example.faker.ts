@@ -16,7 +16,7 @@ export default function fakeExample (data?: any): Example {
   if (data && typeof data !== "object") {
     throw new FakeError("Given data is not an object. " + String(data))
   }
-  const id: string = data["id"] || faker.random.uuid()
+  const id: string = data["id"] || faker.datatype.uuid()
   if (typeof id !== "string") {
     throw new FakeError("id is not a string")
   }
@@ -24,15 +24,15 @@ export default function fakeExample (data?: any): Example {
   if (typeof name !== "string") {
     throw new FakeError("name is not a string")
   }
-  const age: number = data["age"] || faker.random.number()
+  const age: number = data["age"] || faker.datatype.number()
   if (typeof age !== "number") {
     throw new FakeError("age is not a number")
   }
-  const height: number = data["height"] || faker.random.number()
+  const height: number = data["height"] || faker.datatype.number()
   if (typeof height !== "number") {
     throw new FakeError("height is not a number")
   }
-  const isAlien: boolean = data["isAlien"] || faker.random.boolean()
+  const isAlien: boolean = data["isAlien"] || faker.datatype.boolean()
   if (typeof isAlien !== "boolean") {
     throw new FakeError("isAlien is not a boolean")
   }

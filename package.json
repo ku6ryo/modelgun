@@ -1,6 +1,6 @@
 {
   "name": "modelgun",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generator of data model file and util.",
   "bin": "./bin/cli.js",
   "repository": {
@@ -11,6 +11,7 @@
     "dev": "ts-node ./src/dev.ts",
     "build": "./build.sh",
     "gen:test": "ts-node ./src/dev.ts gen ./test/models",
+    "gen:example": "ts-node ./src/dev.ts gen ./examples",
     "test": "jest",
     "test:model": "yarn gen:test && jest"
   },
