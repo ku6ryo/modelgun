@@ -97,15 +97,16 @@ faker = true
 ## Properties
 `props` Defines model properties. Property name follows after `props`.
 
-```toml
-[props.name]
-type = "string"
-```
-
 ### type
 Type of property. Please use supported types.
 ```toml
-[props.str]
+[props.id]
+type = "uuid"
+
+[props.name]
+type = "string"
+
+[props.age]
 type = "int"
 ```
 
