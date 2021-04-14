@@ -1,4 +1,4 @@
-Modelgun - Data model and util auto-gen tool for Node.js
+Modelgun 👾👾👾 🔫 - Data model and util auto-gen tool for Node.js
 
 # Overview
 This is a tool to generate model classes and related utils with validations.
@@ -8,32 +8,58 @@ Currently following files are generated.
 - parser: Parser to convert any object to models.
 - faker (alpha): Fake value generation tool for tests.
 
+## What is Modelgun🔫 originally?
+Modelguns are Japanese replica or toy guns, which are usually made of zinc alloys or plastic materials.
+https://en.wikipedia.org/wiki/Modelguns
+
 # Motivation
 We write data validation code so many times to build a system. But the work is
 very boring, time consuming and can be done by robots. What human should do is
 just design the structures of models and defines the validation rules.
 This tool make you free from the boring works and your life will be easier 😃.
 
-# Example
-Example model definition files and generated files are stored [here](https://github.com/ku6ryo/modelgun/tree/master/examples).
+# How to
 
-## What is Modelgun?
-Modelguns are Japanese replica or toy guns, which are usually made of zinc alloys or plastic materials. Most modelguns commonly available today are designed to highly replicate the physical appearance (some bear the authentic trademarks and markings too) and in full scale of the real gun counterpart.
-https://en.wikipedia.org/wiki/Modelguns
+## 1. Install
+npm
+```
+npm install --save-dev modelgun
+```
+
+yarn
+```
+yarn add --dev modelgun
+```
+
+## 2. Define models
+Modelgun uses [toml](https://github.com/toml-lang/toml) as the format of
+definition files. Use `[MODEL_NAME].model.toml` format for file names.
+`[MODEL_NAME].model.ts`, `[MODEL_NAME].parser.ts` and `[MODEL_NAME].faker.ts` (alpha)
+are generated for each model definition.
+
+## Run
+To run Modelgun generator, use following commands.
+Modelgun processes definition files in a specified directory and generates files
+in the same directory. (* Currently recursive checking of deep directories is not supported.)
+
+In `scripts` in `package.json`, use
+```
+modelgun gen path/to/dir
+```
+
+To call script directory, use
+```
+./node_modules/modelgun/bin/cli.js gen path/to/dir
+```
+
+# Examples
+Example model definition files and generated files are stored [here](https://github.com/ku6ryo/modelgun/tree/master/examples).
 
 # Supported languages
 Currently only TypeScript is supported. If number of users increase, will consider
 to write JavaScript version.
 
-# Command
-To execute command to run generator use following command.
-modelgun Generates definition files in a specified directory.
-```
-modelgun gen path/to/dir
-```
-
 # Model definition file spec
-This tool use [toml](https://github.com/toml-lang/toml) as the format of definition file. `[MODEL_NAME].model.toml` is the file to
 
 ## Top level options
 Model setting parameters.
@@ -46,11 +72,11 @@ description = "This is the data structure to "
 
 ### header
 Header is placed at the top of auto-generated model file. You can write anything like constants, import statements and functions. This was introduced for custom validations.
-But you may find more cases. Please let us know if you find some.
+But you may find more cases. Please let me know if you find some.
 ```toml
 header = "
 // Importing
-import anyFunc from "./path/to/file"
+import anyFunc from \"./path/to/file\"
 
 function customValidator (value: string) {
   ...
