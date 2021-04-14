@@ -94,8 +94,8 @@ parser = false
 faker = true
 ```
 
-## prop
-`prop` Defines model properties. Property name follows after `prop`.
+## Properties
+`props` Defines model properties. Property name follows after `props`.
 
 ```toml
 [props.name]
