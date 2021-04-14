@@ -37,7 +37,7 @@ definition files. Use `[MODEL_NAME].model.toml` format for file names.
 `[MODEL_NAME].model.ts`, `[MODEL_NAME].parser.ts` and `[MODEL_NAME].faker.ts` (alpha)
 are generated for each model definition. See [Model definition file spec section](#model-definition-file-spec) for more details.
 
-## Run
+## 3. Run
 To run Modelgun generator, use following commands.
 Modelgun processes definition files in a specified directory and generates files
 in the same directory. (* Currently recursive checking of deep directories is not supported.)
