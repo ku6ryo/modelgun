@@ -1,5 +1,8 @@
 Modelgun 👾👾👾 🔫 - Data model and util auto-generation tool for TypeScript.
 
+![npm](https://img.shields.io/npm/v/modelgun)
+![npm](https://img.shields.io/npm/dw/modelgun)
+
 # Overview
 This is a tool to generate model classes and related utils with validations.
 What you should do is just define model structures and validation rules.
