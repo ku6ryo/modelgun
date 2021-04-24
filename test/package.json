@@ -5,7 +5,7 @@
   "author": "Ryo Kuroyanagi",
   "license": "MIT",
   "scripts": {
-    "gen": "modelgun gen ./models",
+    "gen": "modelgun gen ./src/models",
     "test": "jest"
   },
   "dependencies": {
