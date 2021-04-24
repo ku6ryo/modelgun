@@ -1,0 +1,18 @@
+{
+  "name": "modelgun",
+  "version": "0.1.6",
+  "description": "Generator of data model file and util.",
+  "bin": "./bin/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ku6ryo/modelgun.git"
+  },
+  "author": "Ryo Kuroyanagi",
+  "license": "MIT",
+  "dependencies": {
+    "camelcase": "^6.2.0",
+    "minimist": "^1.2.5",
+    "mustache": "^4.2.0",
+    "toml": "^3.0.0"
+  }
+}
