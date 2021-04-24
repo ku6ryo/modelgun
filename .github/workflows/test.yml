@@ -30,6 +30,9 @@ jobs:
       - name: Install npm packages in another package
         run: yarn install
         working-directory: test
+      - name: Generate files
+        run: yarn gen
+        working-directory: test
       - name: Run tests
         run: yarn test
         working-directory: test
