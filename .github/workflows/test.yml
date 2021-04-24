@@ -18,11 +18,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - name: Install npm packages
-        run: yarn install
-        working-directory: test
       - name: Install npm packages in dev
         run: yarn install
+        working-directory: dev
+      - name: chmod
+        run: chmod +x build.sh
         working-directory: dev
       - name: Build modelgun
         run: yarn build
