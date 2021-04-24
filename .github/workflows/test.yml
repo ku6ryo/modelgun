@@ -34,10 +34,7 @@ jobs:
         run: yarn gen
         working-directory: test
       - name: Run tests
-        run: ls node_modules | grep types
-        working-directory: test
-      - name: Run tests
-        run: ls node_modules | grep validator
+        run: npm list | grep validator
         working-directory: test
       - name: Run tests
         run: yarn test
