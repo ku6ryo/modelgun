@@ -37,5 +37,8 @@ jobs:
         run: ls node_modules | grep types
         working-directory: test
       - name: Run tests
+        run: ls node_modules | grep validator
+        working-directory: test
+      - name: Run tests
         run: yarn test
         working-directory: test
