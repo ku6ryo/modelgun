@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../dist/index").default()
+require("../src/index").default()
