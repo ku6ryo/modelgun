@@ -2556,7 +2556,7 @@ mkdirp@1.x:
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 modelgun@../dist/:
-  version "0.1.6"
+  version "0.1.7"
   dependencies:
     camelcase "^6.2.0"
     minimist "^1.2.5"
