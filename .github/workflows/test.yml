@@ -34,6 +34,6 @@ jobs:
       - name: Generates files
         run: yarn gen
         working-directory: test
-      - name: Tests
+      - name: Test
         run: yarn test
         working-directory: test
