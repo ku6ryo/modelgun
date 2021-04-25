@@ -9,7 +9,7 @@ import {{type}} from "{{{modelImportPath}}}.model"
 {{/isModel}}
 {{/props}}
 {{#hasUuid}}
-import isUuid from "validator/lib/isUuid"
+import isUUID from "validator/lib/isUUID"
 {{/hasUuid}}
 {{#hasEmail}}
 import isEmail from "validator/lib/isEmail"
@@ -87,7 +87,7 @@ export default class {{class}} {
     }
     {{/hasCandidates}}
     {{#isUuid}}
-    if (!isUuid(value)) {
+    if (!isUUID(value)) {
       throw new InvalidPropertyError(`${value} is not UUID value. ({{class}}.{{setterName}})`)
     }
     {{/isUuid}}
