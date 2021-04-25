@@ -1,6 +1,6 @@
 {
   "name": "modelgun",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Generator of data model file and util.",
   "bin": "./bin/cli.js",
   "repository": {
